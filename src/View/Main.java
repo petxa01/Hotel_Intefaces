@@ -27,7 +27,123 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        employeesMenu = new javax.swing.JMenu();
+        addEmployee = new javax.swing.JMenuItem();
+        showEmployee = new javax.swing.JMenuItem();
+        searchEmployee = new javax.swing.JMenuItem();
+        removeEmployee = new javax.swing.JMenuItem();
+        customersMenu = new javax.swing.JMenu();
+        addCustomers = new javax.swing.JMenuItem();
+        showCustomer = new javax.swing.JMenuItem();
+        searchCustomer = new javax.swing.JMenuItem();
+        removeCustomer = new javax.swing.JMenuItem();
+        roomsMenu = new javax.swing.JMenu();
+        addRoom = new javax.swing.JMenuItem();
+        showRoom = new javax.swing.JMenuItem();
+        searchRoom = new javax.swing.JMenuItem();
+        removeRoom = new javax.swing.JMenuItem();
+        reservationsMenu = new javax.swing.JMenu();
+        addReservation = new javax.swing.JMenuItem();
+        showReservation = new javax.swing.JMenuItem();
+        searchReservation = new javax.swing.JMenuItem();
+        removeReservation = new javax.swing.JMenuItem();
+
+        jMenuItem3.setText("jMenuItem3");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        employeesMenu.setText("Employees");
+
+        addEmployee.setText("Add Employees");
+        employeesMenu.add(addEmployee);
+
+        showEmployee.setText("Show all employees");
+        showEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showEmployeeActionPerformed(evt);
+            }
+        });
+        employeesMenu.add(showEmployee);
+
+        searchEmployee.setText("Search an employee");
+        searchEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchEmployeeActionPerformed(evt);
+            }
+        });
+        employeesMenu.add(searchEmployee);
+
+        removeEmployee.setText("Remove an employee");
+        employeesMenu.add(removeEmployee);
+
+        jMenuBar1.add(employeesMenu);
+
+        customersMenu.setText("Customers");
+
+        addCustomers.setText("Add Customers");
+        customersMenu.add(addCustomers);
+
+        showCustomer.setText("Show all customers");
+        showCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showCustomerActionPerformed(evt);
+            }
+        });
+        customersMenu.add(showCustomer);
+
+        searchCustomer.setText("Search customers");
+        customersMenu.add(searchCustomer);
+
+        removeCustomer.setText("Remove customers");
+        customersMenu.add(removeCustomer);
+
+        jMenuBar1.add(customersMenu);
+
+        roomsMenu.setText("Rooms");
+
+        addRoom.setText("Add Rooms");
+        roomsMenu.add(addRoom);
+
+        showRoom.setText("Show all rooms");
+        showRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showRoomActionPerformed(evt);
+            }
+        });
+        roomsMenu.add(showRoom);
+
+        searchRoom.setText("Search a room");
+        roomsMenu.add(searchRoom);
+
+        removeRoom.setText("Remove a room");
+        roomsMenu.add(removeRoom);
+
+        jMenuBar1.add(roomsMenu);
+
+        reservationsMenu.setText("Reservations");
+
+        addReservation.setText("Add a new reservation");
+        reservationsMenu.add(addReservation);
+
+        showReservation.setText("Show every reservation");
+        reservationsMenu.add(showReservation);
+
+        searchReservation.setText("Search reservations");
+        reservationsMenu.add(searchReservation);
+
+        removeReservation.setText("Remove reservation");
+        removeReservation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeReservationActionPerformed(evt);
+            }
+        });
+        reservationsMenu.add(removeReservation);
+
+        jMenuBar1.add(reservationsMenu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -37,11 +153,31 @@ public class Main extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 279, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void showEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showEmployeeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showEmployeeActionPerformed
+
+    private void searchEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchEmployeeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchEmployeeActionPerformed
+
+    private void showCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showCustomerActionPerformed
+
+    private void showRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRoomActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showRoomActionPerformed
+
+    private void removeReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeReservationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removeReservationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -49,5 +185,27 @@ public class Main extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addCustomers;
+    private javax.swing.JMenuItem addEmployee;
+    private javax.swing.JMenuItem addReservation;
+    private javax.swing.JMenuItem addRoom;
+    private javax.swing.JMenu customersMenu;
+    private javax.swing.JMenu employeesMenu;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem removeCustomer;
+    private javax.swing.JMenuItem removeEmployee;
+    private javax.swing.JMenuItem removeReservation;
+    private javax.swing.JMenuItem removeRoom;
+    private javax.swing.JMenu reservationsMenu;
+    private javax.swing.JMenu roomsMenu;
+    private javax.swing.JMenuItem searchCustomer;
+    private javax.swing.JMenuItem searchEmployee;
+    private javax.swing.JMenuItem searchReservation;
+    private javax.swing.JMenuItem searchRoom;
+    private javax.swing.JMenuItem showCustomer;
+    private javax.swing.JMenuItem showEmployee;
+    private javax.swing.JMenuItem showReservation;
+    private javax.swing.JMenuItem showRoom;
     // End of variables declaration//GEN-END:variables
 }
