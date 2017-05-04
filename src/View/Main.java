@@ -185,27 +185,27 @@ public class Main extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem addCustomers;
-    private javax.swing.JMenuItem addEmployee;
-    private javax.swing.JMenuItem addReservation;
-    private javax.swing.JMenuItem addRoom;
-    private javax.swing.JMenu customersMenu;
-    private javax.swing.JMenu employeesMenu;
+    public javax.swing.JMenuItem addCustomers;
+    public javax.swing.JMenuItem addEmployee;
+    public javax.swing.JMenuItem addReservation;
+    public javax.swing.JMenuItem addRoom;
+    public javax.swing.JMenu customersMenu;
+    public javax.swing.JMenu employeesMenu;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem removeCustomer;
-    private javax.swing.JMenuItem removeEmployee;
-    private javax.swing.JMenuItem removeReservation;
-    private javax.swing.JMenuItem removeRoom;
-    private javax.swing.JMenu reservationsMenu;
-    private javax.swing.JMenu roomsMenu;
-    private javax.swing.JMenuItem searchCustomer;
-    private javax.swing.JMenuItem searchEmployee;
-    private javax.swing.JMenuItem searchReservation;
-    private javax.swing.JMenuItem searchRoom;
-    private javax.swing.JMenuItem showCustomer;
-    private javax.swing.JMenuItem showEmployee;
-    private javax.swing.JMenuItem showReservation;
-    private javax.swing.JMenuItem showRoom;
+    public javax.swing.JMenuItem removeCustomer;
+    public javax.swing.JMenuItem removeEmployee;
+    public javax.swing.JMenuItem removeReservation;
+    public javax.swing.JMenuItem removeRoom;
+    public javax.swing.JMenu reservationsMenu;
+    public javax.swing.JMenu roomsMenu;
+    public javax.swing.JMenuItem searchCustomer;
+    public javax.swing.JMenuItem searchEmployee;
+    public javax.swing.JMenuItem searchReservation;
+    public javax.swing.JMenuItem searchRoom;
+    public javax.swing.JMenuItem showCustomer;
+    public javax.swing.JMenuItem showEmployee;
+    public javax.swing.JMenuItem showReservation;
+    public javax.swing.JMenuItem showRoom;
     // End of variables declaration//GEN-END:variables
 }
