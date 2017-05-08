@@ -30,7 +30,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
         employeesMenu = new javax.swing.JMenu();
-        addEmployee = new javax.swing.JMenuItem();
+        addEmployee1 = new javax.swing.JMenuItem();
         showEmployee = new javax.swing.JMenuItem();
         searchEmployee = new javax.swing.JMenuItem();
         removeEmployee = new javax.swing.JMenuItem();
@@ -56,8 +56,8 @@ public class Main extends javax.swing.JFrame {
 
         employeesMenu.setText("Employees");
 
-        addEmployee.setText("Add Employees");
-        employeesMenu.add(addEmployee);
+        addEmployee1.setText("Add Employees");
+        employeesMenu.add(addEmployee1);
 
         showEmployee.setText("Show all employees");
         showEmployee.addActionListener(new java.awt.event.ActionListener() {
@@ -186,7 +186,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenuItem addCustomers;
-    public javax.swing.JMenuItem addEmployee;
+    public javax.swing.JMenuItem addEmployee1;
     public javax.swing.JMenuItem addReservation;
     public javax.swing.JMenuItem addRoom;
     public javax.swing.JMenu customersMenu;

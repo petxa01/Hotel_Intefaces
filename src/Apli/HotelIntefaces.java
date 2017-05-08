@@ -5,17 +5,40 @@
  */
 package Apli;
 
+import Model.*;
+import View.*;
+import Controller.*;
+
 /**
  *
  * @author Gorka
  */
 public class HotelIntefaces {
-
+    WorkEmployees work;
+    Main start_window;
+    addEmployee addEmployee;
+    Control control;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        HotelIntefaces apli=new HotelIntefaces();
+        apli.start();
+        
+     }
+    private void start(){
+        //instanciar las clases
+        work=new WorkEmployees();
+        start_window=new Main();
+        addEmployee=new addEmployee();
+        control=new Control(start_window, addEmployee, work);
+        start_window.setVisible(true);
+        
+        
+        
+        
     }
+    
     
 }

@@ -53,6 +53,12 @@ public class addEmployee extends javax.swing.JFrame {
 
         setTitle("Add a new Employee");
 
+        nanTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nanTextFieldKeyReleased(evt);
+            }
+        });
+
         surname2TextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 surname2TextFieldActionPerformed(evt);
@@ -117,6 +123,7 @@ public class addEmployee extends javax.swing.JFrame {
         chef.setText("Chef");
 
         save.setText("Save");
+        save.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,7 +198,7 @@ public class addEmployee extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(nanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(surname1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -219,11 +226,32 @@ public class addEmployee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_surname2TextFieldActionPerformed
 
+    private void nanTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nanTextFieldKeyReleased
+        // TODO add your handling code here:
+        
+        String nan = nanTextField.getText().trim();
+        int length = nan.length();
+        if (length != 9) {
+            fallo[0]=true;
+        }else{
+            fallo[0]=false;
+        }
+        boolean fallo2=false;
+        for (int i = 0; i < fallo.length; i++) {
+            if (fallo[i]) {
+                fallo2=true;
+            }
+        }
+        if(!fallo2){
+            save.setEnabled(true);
+        }
+    }//GEN-LAST:event_nanTextFieldKeyReleased
+
     /**
      * @param args the command line arguments
      */
     
-
+    boolean[] fallo= new boolean[6];
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Gender;
     private javax.swing.ButtonGroup JobType;

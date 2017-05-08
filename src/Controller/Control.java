@@ -5,7 +5,7 @@
  */
 
 package Controller;
-
+import View.*;
 import Model.WorkEmployees;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,8 +22,8 @@ import java.awt.event.ActionListener;
  */
 public class Control implements ActionListener {
     
-    private View.addEmployee addEmployee;
-    private View.Main main;
+    private addEmployee addEmployee;
+    private Main main;
     private WorkEmployees emp= new WorkEmployees();
     
     public Control(View.Main m, View.addEmployee add, WorkEmployees e){
@@ -31,7 +31,7 @@ public class Control implements ActionListener {
         main=m;
         emp=e;
         //Activating listeners
-        main.addEmployee.addActionListener(this);
+        main.addEmployee1.addActionListener(this);
         addEmployee.save.addActionListener(this);
     }
     public void showAddEmployees(){
@@ -40,7 +40,9 @@ public class Control implements ActionListener {
 
     
     public void actionPerformed(ActionEvent ae) {
-        
+        if (ae.getSource()==main.addEmployee1){
+            addEmployee.setVisible(true);
+        }
     }
     
     
