@@ -24,18 +24,9 @@ public class Employee extends Person implements Serializable {
     private String jobType;
     
     //constructor
-   // public Employee(){
-       // super();
-   //     setJobType();
-        
-  //  }
-  //  public Employee(String s){
-       // super("s");
-  //      setJobType("Recepcionist");
-                
-  //  }
-    public Employee (int a){
-        super(1);
+   
+    public Employee (){
+        super();
     }
     
     //getters
@@ -48,10 +39,7 @@ public class Employee extends Person implements Serializable {
     public void setJobType(String newJobType){
         jobType=newJobType;
     }
-    public void setJobType(){
-     //   jobType=Menu.jobTypeMenu();
-    }
     
     
-
+    
 }

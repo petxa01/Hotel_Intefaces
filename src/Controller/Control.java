@@ -5,6 +5,7 @@
  */
 
 package Controller;
+import Model.Employee;
 import View.*;
 import Model.WorkEmployees;
 import java.awt.event.ActionEvent;
@@ -26,12 +27,12 @@ public class Control implements ActionListener {
     private Main main;
     private WorkEmployees emp= new WorkEmployees();
     
-    public Control(View.Main m, View.addEmployee add, WorkEmployees e){
-        addEmployee=add;
+    public Control(View.Main m, View.addEmployee emp1, WorkEmployees e){
+        addEmployee=emp1;
         main=m;
         emp=e;
         //Activating listeners
-        main.addEmployee1.addActionListener(this);
+        main.addEmployee.addActionListener(this);
         addEmployee.save.addActionListener(this);
     }
     public void showAddEmployees(){
@@ -40,8 +41,41 @@ public class Control implements ActionListener {
 
     
     public void actionPerformed(ActionEvent ae) {
-        if (ae.getSource()==main.addEmployee1){
+        if (ae.getSource()==main.addEmployee){//addEmployee Button
             addEmployee.setVisible(true);
+        } else if (ae.getSource()==addEmployee.save){//Save a new employee button
+            Employee emplo=new Employee();
+            
+            emplo.setNan(addEmployee.nanTextField.getText());
+            emplo.setName(addEmployee.nameTextField.getText());
+            emplo.setSurname1(addEmployee.surname1TextField.getText());
+            emplo.setSurname2(addEmployee.surname2TextField.getText());
+            emplo.setPhone(Integer.parseInt(addEmployee.phoneTextField.getText()));
+            emplo.setEmail(addEmployee.emailTextField.getText());
+            if(addEmployee.male.isSelected()){
+                emplo.setGender("Male");
+            }else{
+                emplo.setGender("Female");
+            }
+            if (addEmployee.director.isSelected()){
+                emplo.setJobType("Director");
+            } else if (addEmployee.recepcionist.isSelected()){
+                emplo.setJobType("Recepcionist");
+            }else if(addEmployee.cleaner.isSelected()){
+                emplo.setJobType("Cleaner");
+            } else{
+                emplo.setJobType("Chef");
+            }
+            WorkEmployees.writeEmployee(emplo);
+            
+            addEmployee.nanTextField.setText("");
+            addEmployee.nameTextField.setText("");
+            addEmployee.surname1TextField.setText("");
+            addEmployee.surname2TextField.setText("");
+            addEmployee.phoneTextField.setText("");
+            addEmployee.emailTextField.setText("");
+            addEmployee.male.setSelected(true);
+            addEmployee.director.setSelected(true);
         }
     }
     

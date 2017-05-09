@@ -53,9 +53,20 @@ public class addEmployee extends javax.swing.JFrame {
 
         setTitle("Add a new Employee");
 
+        nanTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nanTextFieldActionPerformed(evt);
+            }
+        });
         nanTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 nanTextFieldKeyReleased(evt);
+            }
+        });
+
+        nameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nameTextFieldKeyReleased(evt);
             }
         });
 
@@ -228,7 +239,7 @@ public class addEmployee extends javax.swing.JFrame {
 
     private void nanTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nanTextFieldKeyReleased
         // TODO add your handling code here:
-        
+        save.setEnabled(false);
         String nan = nanTextField.getText().trim();
         int length = nan.length();
         if (length != 9) {
@@ -246,6 +257,31 @@ public class addEmployee extends javax.swing.JFrame {
             save.setEnabled(true);
         }
     }//GEN-LAST:event_nanTextFieldKeyReleased
+
+    private void nanTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nanTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nanTextFieldActionPerformed
+
+    private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
+        // TODO add your handling code here:
+        save.setEnabled(false);
+        String nan = nanTextField.getText().trim();
+        int length = nan.length();
+        if (length <1) {
+            fallo[1]=true;
+        }else{
+            fallo[1]=false;
+        }
+        boolean fallo2=false;
+        for (int i = 0; i < fallo.length; i++) {
+            if (fallo[i]) {
+                fallo2=true;
+            }
+        }
+        if(!fallo2){
+            save.setEnabled(true);
+        }
+    }//GEN-LAST:event_nameTextFieldKeyReleased
 
     /**
      * @param args the command line arguments
