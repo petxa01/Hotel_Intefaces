@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,6 +13,9 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @file WorkEmployees.java
@@ -41,6 +45,30 @@ public class WorkEmployees {
             System.out.println("Error: " + gaizki.toString());
         }
 
+    }
+    public static ArrayList <Employee> showEmployee() {
+        ArrayList<Employee> employeeList = null;
+        try{
+            FileInputStream fis = new FileInputStream("C:\\users\\Petxa\\Employees.ser");
+            MiObjectInputStream so = new MiObjectInputStream(fis);
+            Employee emp = new Employee();
+           while (true) {    
+               emp = (Employee) so.readObject();
+               employeeList.add(emp);
+
+               
+            } 
+        } catch (FileNotFoundException ex) {
+            
+        } catch (IOException ex) {
+            
+        } catch (ClassNotFoundException ex) {
+            
+        }
+        
+        
+        return employeeList;
+        
     }
 
     public static class MiObjectInputStream extends ObjectInputStream {
