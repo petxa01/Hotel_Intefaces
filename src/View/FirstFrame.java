@@ -9,12 +9,12 @@ package View;
  *
  * @author Gorka
  */
-public class Main extends javax.swing.JFrame {
+public class FirstFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form Main
      */
-    public Main() {
+    public FirstFrame() {
         initComponents();
     }
 

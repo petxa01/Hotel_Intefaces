@@ -30,7 +30,7 @@ public class ShowEmployees extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         employeeTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Employees");
 
         employeeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -15,7 +15,7 @@ import Controller.*;
  */
 public class HotelIntefaces {
     WorkEmployees work;
-    Main start_window;
+    FirstFrame start_window;
     addEmployee addEmployee;
     Control control;
     /**
@@ -30,7 +30,7 @@ public class HotelIntefaces {
     private void start(){
         //instanciar las clases
         work=new WorkEmployees();
-        start_window=new Main();
+        start_window=new FirstFrame();
         addEmployee=new addEmployee();
         control=new Control(start_window, addEmployee, work);
         start_window.setVisible(true);

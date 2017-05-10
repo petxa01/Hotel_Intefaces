@@ -265,8 +265,8 @@ public class addEmployee extends javax.swing.JFrame {
     private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
         // TODO add your handling code here:
         save.setEnabled(false);
-        String nan = nanTextField.getText().trim();
-        int length = nan.length();
+        String name = nanTextField.getText().trim();
+        int length = name.length();
         if (length <1) {
             fallo[1]=true;
         }else{

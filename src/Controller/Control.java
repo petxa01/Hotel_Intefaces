@@ -24,10 +24,10 @@ import java.awt.event.ActionListener;
 public class Control implements ActionListener {
     
     private addEmployee addEmployee;
-    private Main main;
+    private FirstFrame main;
     private WorkEmployees emp= new WorkEmployees();
     
-    public Control(View.Main m, View.addEmployee emp1, WorkEmployees e){
+    public Control(View.FirstFrame m, View.addEmployee emp1, WorkEmployees e){
         addEmployee=emp1;
         main=m;
         emp=e;
