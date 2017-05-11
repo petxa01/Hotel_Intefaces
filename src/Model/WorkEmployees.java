@@ -47,7 +47,7 @@ public class WorkEmployees {
 
     }
     public static ArrayList <Employee> showEmployee() {
-        ArrayList<Employee> employeeList = null;
+        ArrayList<Employee> employeeList = new ArrayList();
         try{
             FileInputStream fis = new FileInputStream("C:\\users\\Petxa\\Employees.ser");
             MiObjectInputStream so = new MiObjectInputStream(fis);
@@ -55,8 +55,6 @@ public class WorkEmployees {
            while (true) {    
                emp = (Employee) so.readObject();
                employeeList.add(emp);
-
-               
             } 
         } catch (FileNotFoundException ex) {
             
@@ -69,6 +67,28 @@ public class WorkEmployees {
         
         return employeeList;
         
+    }
+    public static Employee searchEmployee(String nan){
+        
+        try{
+            FileInputStream fis = new FileInputStream("C:\\users\\Petxa\\Employees.ser");
+            MiObjectInputStream so = new MiObjectInputStream(fis);
+            Employee emp = new Employee();
+           while (true) {    
+               emp = (Employee) so.readObject();
+               if(nan==emp.getNan()){
+                   
+               }
+            } 
+        } catch (FileNotFoundException ex) {
+            
+        } catch (IOException ex) {
+            
+        } catch (ClassNotFoundException ex) {
+            
+        }
+        
+        return null;
     }
 
     public static class MiObjectInputStream extends ObjectInputStream {

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -76,7 +77,7 @@ public class Control implements ActionListener {
                 emplo.setJobType("Chef");
             }
             WorkEmployees.writeEmployee(emplo);
-
+            JOptionPane.showMessageDialog(null,"Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
             addEmployee.nanTextField.setText("");
             addEmployee.nameTextField.setText("");
             addEmployee.surname1TextField.setText("");
@@ -90,24 +91,27 @@ public class Control implements ActionListener {
         } else if(ae.getSource()==showEmployee.refreshEmployees){//boton Resfresh en ShowEmployee
             ArrayList<Employee> employeeList = null;
             employeeList = WorkEmployees.showEmployee();
-            Employee emp;
+            
+            Employee emplo;
             DefaultTableModel modeloa = (DefaultTableModel) showEmployee.employeeTable.getModel();
+            modeloa.setRowCount(0);
             int rows = 0;
             for (int i = 0; i < employeeList.size(); i++) {
                 
                 //ARRAY LISTETIK IKASLEAK HARTU
-                emp = (Employee) employeeList.get(i);
+                emplo = (Employee) employeeList.get(i);
                 //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
                 modeloa.addRow(new Object[rows]);
                 //ZUTABEAK GEHITZEKO
-                modeloa.setValueAt(emp.getNan(), i, 0);
-                modeloa.setValueAt(emp.getName(), i, 1);
-                modeloa.setValueAt(emp.getSurname1(), i, 2);
-                modeloa.setValueAt(emp.getSurname2(), i, 3);
-                modeloa.setValueAt(emp.getPhone(), i, 4);
-                modeloa.setValueAt(emp.getEmail(), i, 5);
-                modeloa.setValueAt(emp.getGender(), i, 6);
-                modeloa.setValueAt(emp.getJobType(), i, 7);
+                modeloa.setValueAt(emplo.getNan(), i, 0);
+                modeloa.setValueAt(emplo.getName(), i, 1);
+                modeloa.setValueAt(emplo.getSurname1(), i, 2);
+                modeloa.setValueAt(emplo.getSurname2(), i, 3);
+                modeloa.setValueAt(emplo.getPhone(), i, 4);
+                modeloa.setValueAt(emplo.getEmail(), i, 5);
+                modeloa.setValueAt(emplo.getGender(), i, 6);
+                modeloa.setValueAt(emplo.getJobType(), i, 7);
+                
             }
         }
     }

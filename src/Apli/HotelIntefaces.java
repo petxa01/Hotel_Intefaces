@@ -30,6 +30,7 @@ public class HotelIntefaces {
      }
     private void start(){
         //instanciar las clases
+        showEmp=new ShowEmployees();
         work=new WorkEmployees();
         start_window=new FirstFrame();
         addEmployee=new addEmployee();
