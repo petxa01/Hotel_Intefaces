@@ -28,23 +28,27 @@ import javax.swing.table.DefaultTableModel;
  * in Templates/Classes/Class.java.
  *
  */
-public class Control implements ActionListener {
+public class Control implements ActionListener{
 
     private addEmployee addEmployee; //ventana addEmployee
     private FirstFrame firstFrame;// ventana de inicio
     private WorkEmployees emp = new WorkEmployees();
     private ShowEmployees showEmployee; //ventana showEmployees
+    private SearchEmployee searchEmployee; //ventana searchemp
 
-    public Control(View.FirstFrame frame1, View.addEmployee addemp, WorkEmployees workemp, ShowEmployees showEmp) {
+    public Control(FirstFrame frame1, addEmployee addemp, WorkEmployees workemp, ShowEmployees showEmp, SearchEmployee searchEmp) {
         addEmployee = addemp;
         firstFrame = frame1;
         emp = workemp;
         showEmployee=showEmp;
+        searchEmployee=searchEmp;
         //Activating listeners
         firstFrame.addEmployee.addActionListener(this);
-        addEmployee.save.addActionListener(this);
         firstFrame.showEmployee.addActionListener(this);
+        firstFrame.searchEmployee.addActionListener(this);
+        addEmployee.save.addActionListener(this);
         showEmployee.refreshEmployees.addActionListener(this);
+        searchEmployee.Search.addActionListener(this);
     }
 //    public void showAddEmployees(){
 //        addEmployee.setVisible(true);
@@ -113,6 +117,44 @@ public class Control implements ActionListener {
                 modeloa.setValueAt(emplo.getJobType(), i, 7);
                 
             }
+        } else if (ae.getSource()==searchEmployee.Search) {
+            
+            searchEmployee.errorDisplay.setVisible(false);
+            Employee emplo;
+            DefaultTableModel modeloa = (DefaultTableModel) showEmployee.employeeTable.getModel();
+            modeloa.setRowCount(0);
+            
+            
+                
+                //ARRAY LISTETIK IKASLEAK HARTU
+                emplo = WorkEmployees.searchEmployee(searchEmployee.SearchTextField.getText());
+                //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
+                
+                if(emplo!=null){
+                for (int i = 0; i < 1; i++) {    
+                    System.out.println(emplo.getNan());
+                modeloa.addRow(new Object[1]);
+                //ZUTABEAK GEHITZEKO
+                modeloa.setValueAt(emplo.getNan(), 0, 0);
+                modeloa.setValueAt(emplo.getName(), 0, 1);
+                modeloa.setValueAt(emplo.getSurname1(), 0, 2);
+                modeloa.setValueAt(emplo.getSurname2(), 0, 3);
+                modeloa.setValueAt(emplo.getPhone(), 0, 4);
+                modeloa.setValueAt(emplo.getEmail(), 0, 5);
+                modeloa.setValueAt(emplo.getGender(), 0, 6);
+                modeloa.setValueAt(emplo.getJobType(), 0, 7);
+                searchEmployee.errorDisplay.setVisible(false);
+                searchEmployee.SearchTextField.setText("");
+                }
+                }else {
+                    searchEmployee.errorDisplay.setText("No Employee with that NAN");
+                    searchEmployee.errorDisplay.setVisible(true);
+                    searchEmployee.SearchTextField.setText("");
+                    
+                }
+        } else if (ae.getSource()==firstFrame.searchEmployee) {
+            searchEmployee.setVisible(true);
+            
         }
     }
 

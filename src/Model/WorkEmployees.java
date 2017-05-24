@@ -13,6 +13,9 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,25 +73,38 @@ public class WorkEmployees {
     }
     public static Employee searchEmployee(String nan){
         
+        Conne connex = new Conne();
+        Employee emp=new Employee();
+        boolean exist =false;
         try{
-            FileInputStream fis = new FileInputStream("C:\\users\\Petxa\\Employees.ser");
-            MiObjectInputStream so = new MiObjectInputStream(fis);
-            Employee emp = new Employee();
-           while (true) {    
-               emp = (Employee) so.readObject();
-               if(nan==emp.getNan()){
-                   
-               }
-            } 
-        } catch (FileNotFoundException ex) {
-            
-        } catch (IOException ex) {
-            
-        } catch (ClassNotFoundException ex) {
-            
+           String trim = nan.trim();
+           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM employee WHERE Nan = ? ");
+           kontsulta.setString(1, trim);
+           ResultSet res = kontsulta.executeQuery();
+           while (res.next()){
+               exist=true;
+               
+               emp.setNan(res.getString(1));
+               emp.setName(res.getString(2));
+               emp.setSurname1(res.getString(3));
+               emp.setSurname2(res.getString(4));
+               emp.setPhone(res.getInt(5));
+               emp.setEmail(res.getString(6));
+               emp.setGender(res.getString(7));
+               emp.setJobType(res.getString(8));
+               
+           }
+           res.close();
+        } catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION");
+        }
+        if(exist){
+            return emp;
+        }else{
+            return null;
         }
         
-        return null;
+        
     }
 
     public static class MiObjectInputStream extends ObjectInputStream {
