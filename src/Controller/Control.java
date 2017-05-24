@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
  * in Templates/Classes/Class.java.
  *
  */
-public class Control implements ActionListener{
+public class Control implements ActionListener {
 
     private addEmployee addEmployee; //ventana addEmployee
     private FirstFrame firstFrame;// ventana de inicio
@@ -40,8 +40,8 @@ public class Control implements ActionListener{
         addEmployee = addemp;
         firstFrame = frame1;
         emp = workemp;
-        showEmployee=showEmp;
-        searchEmployee=searchEmp;
+        showEmployee = showEmp;
+        searchEmployee = searchEmp;
         //Activating listeners
         firstFrame.addEmployee.addActionListener(this);
         firstFrame.showEmployee.addActionListener(this);
@@ -81,7 +81,7 @@ public class Control implements ActionListener{
                 emplo.setJobType("Chef");
             }
             WorkEmployees.writeEmployee(emplo);
-            JOptionPane.showMessageDialog(null,"Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
             addEmployee.nanTextField.setText("");
             addEmployee.nameTextField.setText("");
             addEmployee.surname1TextField.setText("");
@@ -92,16 +92,16 @@ public class Control implements ActionListener{
             addEmployee.director.setSelected(true);
         } else if (ae.getSource() == firstFrame.showEmployee) {//boton showEmployee
             showEmployee.setVisible(true);
-        } else if(ae.getSource()==showEmployee.refreshEmployees){//boton Resfresh en ShowEmployee
+        } else if (ae.getSource() == showEmployee.refreshEmployees) {//boton Resfresh en ShowEmployee
             ArrayList<Employee> employeeList = null;
             employeeList = WorkEmployees.showEmployee();
-            
+
             Employee emplo;
             DefaultTableModel modeloa = (DefaultTableModel) showEmployee.employeeTable.getModel();
             modeloa.setRowCount(0);
             int rows = 0;
             for (int i = 0; i < employeeList.size(); i++) {
-                
+
                 //ARRAY LISTETIK IKASLEAK HARTU
                 emplo = (Employee) employeeList.get(i);
                 //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
@@ -115,46 +115,53 @@ public class Control implements ActionListener{
                 modeloa.setValueAt(emplo.getEmail(), i, 5);
                 modeloa.setValueAt(emplo.getGender(), i, 6);
                 modeloa.setValueAt(emplo.getJobType(), i, 7);
-                
+
             }
-        } else if (ae.getSource()==searchEmployee.Search) {
-            
+        } else if (ae.getSource() == searchEmployee.Search) {
+
             searchEmployee.errorDisplay.setVisible(false);
+            ArrayList<Employee> employeeList = null;
             Employee emplo;
-            DefaultTableModel modeloa = (DefaultTableModel) showEmployee.employeeTable.getModel();
+            DefaultTableModel modeloa = (DefaultTableModel) searchEmployee.employeeTable.getModel();
             modeloa.setRowCount(0);
+            int rows = 0;
+
+            //ARRAY LISTETIK IKASLEAK HARTU
+            employeeList = WorkEmployees.searchEmployee(searchEmployee.SearchTextField.getText());
+            //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
             
             
-                
-                //ARRAY LISTETIK IKASLEAK HARTU
-                emplo = WorkEmployees.searchEmployee(searchEmployee.SearchTextField.getText());
-                //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
-                
-                if(emplo!=null){
-                for (int i = 0; i < 1; i++) {    
-                    System.out.println(emplo.getNan());
-                modeloa.addRow(new Object[1]);
-                //ZUTABEAK GEHITZEKO
-                modeloa.setValueAt(emplo.getNan(), 0, 0);
-                modeloa.setValueAt(emplo.getName(), 0, 1);
-                modeloa.setValueAt(emplo.getSurname1(), 0, 2);
-                modeloa.setValueAt(emplo.getSurname2(), 0, 3);
-                modeloa.setValueAt(emplo.getPhone(), 0, 4);
-                modeloa.setValueAt(emplo.getEmail(), 0, 5);
-                modeloa.setValueAt(emplo.getGender(), 0, 6);
-                modeloa.setValueAt(emplo.getJobType(), 0, 7);
-                searchEmployee.errorDisplay.setVisible(false);
-                searchEmployee.SearchTextField.setText("");
-                }
-                }else {
-                    searchEmployee.errorDisplay.setText("No Employee with that NAN");
-                    searchEmployee.errorDisplay.setVisible(true);
+            
+            
+            
+            
+            if (employeeList != null) {
+                for (int i = 0; i < employeeList.size(); i++) {
+                    //System.out.println(emplo.getNan());
+                    modeloa.addRow(new Object[rows]);
+                    emplo = employeeList.get(i);
+                    //ZUTABEAK GEHITZEKO
+                    System.out.println("");
+                    modeloa.setValueAt(emplo.getNan(), i, 0);
+                    modeloa.setValueAt(emplo.getName(), i, 1);
+                    modeloa.setValueAt(emplo.getSurname1(), i, 2);
+                    modeloa.setValueAt(emplo.getSurname2(), i, 3);
+                    modeloa.setValueAt(emplo.getPhone(), i, 4);
+                    modeloa.setValueAt(emplo.getEmail(), i, 5);
+                    modeloa.setValueAt(emplo.getGender(), i, 6);
+                    modeloa.setValueAt(emplo.getJobType(), i, 7);
+                    searchEmployee.errorDisplay.setVisible(false);
                     searchEmployee.SearchTextField.setText("");
-                    
                 }
-        } else if (ae.getSource()==firstFrame.searchEmployee) {
+            } else {
+                searchEmployee.errorDisplay.setText("No Employee with that NAN");
+                searchEmployee.errorDisplay.setVisible(true);
+                searchEmployee.SearchTextField.setText("");
+
+            }
+        } else if (ae.getSource() == firstFrame.searchEmployee) {
             searchEmployee.setVisible(true);
-            
+
         }
     }
 

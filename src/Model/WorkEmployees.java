@@ -51,28 +51,40 @@ public class WorkEmployees {
     }
     public static ArrayList <Employee> showEmployee() {
         ArrayList<Employee> employeeList = new ArrayList();
+        Conne connex = new Conne();
+        Employee emp=new Employee();
+        boolean exist =false;
         try{
-            FileInputStream fis = new FileInputStream("C:\\users\\Petxa\\Employees.ser");
-            MiObjectInputStream so = new MiObjectInputStream(fis);
-            Employee emp = new Employee();
-           while (true) {    
-               emp = (Employee) so.readObject();
+           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM employee");
+           ResultSet res = kontsulta.executeQuery();
+           while (res.next()){
+               exist=true;
+               
+               emp.setNan(res.getString(1));
+               emp.setName(res.getString(2));
+               emp.setSurname1(res.getString(3));
+               emp.setSurname2(res.getString(4));
+               emp.setPhone(res.getInt(5));
+               emp.setEmail(res.getString(6));
+               emp.setGender(res.getString(7));
+               emp.setJobType(res.getString(8));
                employeeList.add(emp);
-            } 
-        } catch (FileNotFoundException ex) {
-            
-        } catch (IOException ex) {
-            
-        } catch (ClassNotFoundException ex) {
-            
+               
+           }
+           res.close();
+        } catch (SQLException ex) {
+            System.out.println("SQL EXCEPTION");
+        }
+        if(exist){
+            return employeeList;
+        }else{
+            return null;
         }
         
         
-        return employeeList;
-        
     }
-    public static Employee searchEmployee(String nan){
-        
+    public static ArrayList <Employee> searchEmployee(String nan){
+        ArrayList<Employee> employeeList = new ArrayList();
         Conne connex = new Conne();
         Employee emp=new Employee();
         boolean exist =false;
@@ -92,14 +104,14 @@ public class WorkEmployees {
                emp.setEmail(res.getString(6));
                emp.setGender(res.getString(7));
                emp.setJobType(res.getString(8));
-               
+               employeeList.add(emp);
            }
            res.close();
         } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION");
         }
         if(exist){
-            return emp;
+            return employeeList;
         }else{
             return null;
         }
