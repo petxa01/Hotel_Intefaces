@@ -66,7 +66,7 @@ public class SearchEmployee extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(Search)
                 .addGap(18, 18, 18)
-                .addComponent(errorDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(errorDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

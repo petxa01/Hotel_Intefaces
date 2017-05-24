@@ -11,6 +11,7 @@ import Model.WorkEmployees;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +50,8 @@ public class Control implements ActionListener {
         addEmployee.save.addActionListener(this);
         showEmployee.refreshEmployees.addActionListener(this);
         searchEmployee.Search.addActionListener(this);
+        showEmployee.removeEmployee.addActionListener(this);
+        
     }
 //    public void showAddEmployees(){
 //        addEmployee.setVisible(true);
@@ -117,7 +120,28 @@ public class Control implements ActionListener {
                 modeloa.setValueAt(emplo.getJobType(), i, 7);
 
             }
-        } else if (ae.getSource() == searchEmployee.Search) {
+        } else if(ae.getSource() == showEmployee.removeEmployee){
+            if(showEmployee.employeeTable.getSelectionModel().isSelectionEmpty()){
+                JOptionPane.showMessageDialog(null,
+                        "You must select one row",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+            } else{
+                int i = showEmployee.employeeTable.getSelectedRow();
+                String nan = (String) showEmployee.employeeTable.getValueAt(i, 0);
+                try {
+                    WorkEmployees.removeEmployee(nan);
+                } catch (SQLException ex) {
+                    
+                }
+                int selectedRow = showEmployee.employeeTable.getSelectedRow();
+                DefaultTableModel modeloa = (DefaultTableModel) showEmployee.employeeTable.getModel();
+                modeloa.removeRow(selectedRow);
+                showEmployee.employeeTable.setModel(modeloa);
+            }
+        }
+        
+        else if (ae.getSource() == searchEmployee.Search) {
 
             searchEmployee.errorDisplay.setVisible(false);
             ArrayList<Employee> employeeList = null;
@@ -129,12 +153,6 @@ public class Control implements ActionListener {
             //ARRAY LISTETIK IKASLEAK HARTU
             employeeList = WorkEmployees.searchEmployee(searchEmployee.SearchTextField.getText());
             //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
-            
-            
-            
-            
-            
-            
             if (employeeList != null) {
                 for (int i = 0; i < employeeList.size(); i++) {
                     //System.out.println(emplo.getNan());

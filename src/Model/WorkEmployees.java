@@ -34,32 +34,37 @@ import java.util.logging.Logger;
 public class WorkEmployees {
 
     public static void writeEmployee(Employee emp) {
-       
-
+       Conne conex = new Conne(); //Konexioa burutu       
         try {
-            FileOutputStream fos = new FileOutputStream("C:\\users\\Petxa\\Employees.ser", true);
-            MiObjectOutputStream so = new MiObjectOutputStream(fos);
-            so.writeObject(emp);
-            so.close();
-            fos.close();
-        } catch (FileNotFoundException gaizki) {
-            System.out.println("File not Found.");
-        } catch (IOException gaizki) {
-            System.out.println("Error: " + gaizki.toString());
+            PreparedStatement kontsulta = conex.getConnection().prepareStatement("INSERT INTO hotel.employee VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            kontsulta.setString(1, emp.getNan());
+            kontsulta.setString(2, emp.getName());
+            kontsulta.setString(3, emp.getSurname1());
+            kontsulta.setString(4, emp.getSurname2());
+            kontsulta.setInt(5, emp.getPhone());
+            kontsulta.setString(6, emp.getEmail());
+            kontsulta.setString(7, emp.getGender());
+            kontsulta.setString(8, emp.getJobType());
+
+            kontsulta.execute();//Kontsulta exekutatu eta emaitza res-ri pasatu
+
+            kontsulta.close();//Kurtsorea itxi
+            conex.desconectar();
+        } catch (SQLException e) {
         }
 
     }
     public static ArrayList <Employee> showEmployee() {
         ArrayList<Employee> employeeList = new ArrayList();
         Conne connex = new Conne();
-        Employee emp=new Employee();
+        
         boolean exist =false;
         try{
            PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM employee");
            ResultSet res = kontsulta.executeQuery();
            while (res.next()){
                exist=true;
-               
+               Employee emp=new Employee();
                emp.setNan(res.getString(1));
                emp.setName(res.getString(2));
                emp.setSurname1(res.getString(3));
@@ -117,6 +122,20 @@ public class WorkEmployees {
         }
         
         
+    }
+    
+    public static ResultSet removeEmployee(String nan) throws SQLException {
+        Conne conex = new Conne();
+        try {
+            PreparedStatement kontsulta = conex.getConnection().prepareStatement("DELETE FROM hotel.employee WHERE nan=?");
+            kontsulta.setString(1, nan);
+            kontsulta.execute();
+            conex.desconectar();
+        } catch (SQLException e) {
+        }
+        
+        return null;
+
     }
 
     public static class MiObjectInputStream extends ObjectInputStream {
