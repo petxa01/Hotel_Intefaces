@@ -16,11 +16,9 @@ import java.io.OutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  * @file WorkEmployees.java
@@ -33,56 +31,49 @@ import javax.swing.JOptionPane;
  * in Templates/Classes/Class.java.
  *
  */
-public class WorkEmployees {
+public class WorkCustomer {
 
-    public static boolean writeEmployee(Employee emp) {
+    public static void writeCustomer(Customer cust) {
        Conne conex = new Conne(); //Konexioa burutu       
         try {
-            PreparedStatement kontsulta = conex.getConnection().prepareStatement("INSERT INTO hotel.employee VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            kontsulta.setString(1, emp.getNan());
-            kontsulta.setString(2, emp.getName());
-            kontsulta.setString(3, emp.getSurname1());
-            kontsulta.setString(4, emp.getSurname2());
-            kontsulta.setInt(5, emp.getPhone());
-            kontsulta.setString(6, emp.getEmail());
-            kontsulta.setString(7, emp.getGender());
-            kontsulta.setString(8, emp.getJobType());
+            PreparedStatement kontsulta = conex.getConnection().prepareStatement("INSERT INTO hotel.customer VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            kontsulta.setString(1, cust.getNan());
+            kontsulta.setString(2, cust.getName());
+            kontsulta.setString(3, cust.getSurname1());
+            kontsulta.setString(4, cust.getSurname2());
+            kontsulta.setInt(5, cust.getPhone());
+            kontsulta.setString(6, cust.getEmail());
+            kontsulta.setString(7, cust.getGender());
+            kontsulta.setString(8, cust.getPayingMethod());
 
             kontsulta.execute();//Kontsulta exekutatu eta emaitza res-ri pasatu
 
             kontsulta.close();//Kurtsorea itxi
             conex.desconectar();
-        } catch (SQLIntegrityConstraintViolationException e) {
-            JOptionPane.showMessageDialog(null,
-                        "That employee already exists",
-                        "Warning",
-                        JOptionPane.WARNING_MESSAGE);
-            return false;
-        } catch (SQLException ex) {
-            return false;
+        } catch (SQLException e) {
         }
-        return true;
+
     }
-    public static ArrayList <Employee> showEmployee() {
-        ArrayList<Employee> employeeList = new ArrayList();
+    public static ArrayList <Customer> showCustomer() {
+        ArrayList<Customer> custList = new ArrayList();
         Conne connex = new Conne();
         
         boolean exist =false;
         try{
-           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM employee");
+           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM hotel.customer");
            ResultSet res = kontsulta.executeQuery();
            while (res.next()){
                exist=true;
-               Employee emp=new Employee();
-               emp.setNan(res.getString(1));
-               emp.setName(res.getString(2));
-               emp.setSurname1(res.getString(3));
-               emp.setSurname2(res.getString(4));
-               emp.setPhone(res.getInt(5));
-               emp.setEmail(res.getString(6));
-               emp.setGender(res.getString(7));
-               emp.setJobType(res.getString(8));
-               employeeList.add(emp);
+               Customer cust=new Customer();
+               cust.setNan(res.getString(1));
+               cust.setName(res.getString(2));
+               cust.setSurname1(res.getString(3));
+               cust.setSurname2(res.getString(4));
+               cust.setPhone(res.getInt(5));
+               cust.setEmail(res.getString(6));
+               cust.setGender(res.getString(7));
+               cust.setPayingMethod(res.getString(8));
+               custList.add(cust);
                
            }
            res.close();
@@ -90,7 +81,7 @@ public class WorkEmployees {
             System.out.println("SQL EXCEPTION");
         }
         if(exist){
-            return employeeList;
+            return custList;
         }else{
             return null;
         }

@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Model.Employee;
+import Model.*;
 import View.*;
 import Model.WorkEmployees;
 import java.awt.event.ActionEvent;
@@ -36,13 +36,17 @@ public class Control implements ActionListener {
     private WorkEmployees emp = new WorkEmployees();
     private ShowEmployees showEmployee; //ventana showEmployees
     private SearchEmployee searchEmployee; //ventana searchemp
+    private addCustomer addCustomer; //ventana addCustomer
+    private ShowCustomers showCustomer; // ventana showCustomer
 
-    public Control(FirstFrame frame1, addEmployee addemp, WorkEmployees workemp, ShowEmployees showEmp, SearchEmployee searchEmp) {
+    public Control(FirstFrame frame1, addEmployee addemp, WorkEmployees workemp, ShowEmployees showEmp, SearchEmployee searchEmp , addCustomer addCust, ShowCustomers showCust) {
         addEmployee = addemp;
         firstFrame = frame1;
         emp = workemp;
         showEmployee = showEmp;
         searchEmployee = searchEmp;
+        addCustomer = addCust;
+        showCustomer = showCust;
         //Activating listeners
         firstFrame.addEmployee.addActionListener(this);
         firstFrame.showEmployee.addActionListener(this);
@@ -51,6 +55,10 @@ public class Control implements ActionListener {
         showEmployee.refreshEmployees.addActionListener(this);
         searchEmployee.Search.addActionListener(this);
         showEmployee.removeEmployee.addActionListener(this);
+        firstFrame.addCustomers.addActionListener(this);
+        addCustomer.save.addActionListener(this);
+        firstFrame.showCustomer.addActionListener(this);
+        
         
     }
 //    public void showAddEmployees(){
@@ -62,7 +70,7 @@ public class Control implements ActionListener {
             addEmployee.setVisible(true);
         } else if (ae.getSource() == addEmployee.save) {//Save a new employee button
             Employee emplo = new Employee();
-
+            boolean valid;
             emplo.setNan(addEmployee.nanTextField.getText());
             emplo.setName(addEmployee.nameTextField.getText());
             emplo.setSurname1(addEmployee.surname1TextField.getText());
@@ -83,8 +91,10 @@ public class Control implements ActionListener {
             } else {
                 emplo.setJobType("Chef");
             }
-            WorkEmployees.writeEmployee(emplo);
+            valid=WorkEmployees.writeEmployee(emplo);
+            if(valid){
             JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
+            }
             addEmployee.nanTextField.setText("");
             addEmployee.nameTextField.setText("");
             addEmployee.surname1TextField.setText("");
@@ -95,6 +105,29 @@ public class Control implements ActionListener {
             addEmployee.director.setSelected(true);
         } else if (ae.getSource() == firstFrame.showEmployee) {//boton showEmployee
             showEmployee.setVisible(true);
+            ArrayList<Employee> employeeList = null;
+            employeeList = WorkEmployees.showEmployee();
+
+            Employee emplo;
+            DefaultTableModel modeloa = (DefaultTableModel) showEmployee.employeeTable.getModel();
+            modeloa.setRowCount(0);
+            int rows = 0;
+            for (int i = 0; i < employeeList.size(); i++) {
+
+                //ARRAY LISTETIK IKASLEAK HARTU
+                emplo = (Employee) employeeList.get(i);
+                //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
+                modeloa.addRow(new Object[rows]);
+                //ZUTABEAK GEHITZEKO
+                modeloa.setValueAt(emplo.getNan(), i, 0);
+                modeloa.setValueAt(emplo.getName(), i, 1);
+                modeloa.setValueAt(emplo.getSurname1(), i, 2);
+                modeloa.setValueAt(emplo.getSurname2(), i, 3);
+                modeloa.setValueAt(emplo.getPhone(), i, 4);
+                modeloa.setValueAt(emplo.getEmail(), i, 5);
+                modeloa.setValueAt(emplo.getGender(), i, 6);
+                modeloa.setValueAt(emplo.getJobType(), i, 7);
+            }
         } else if (ae.getSource() == showEmployee.refreshEmployees) {//boton Resfresh en ShowEmployee
             ArrayList<Employee> employeeList = null;
             employeeList = WorkEmployees.showEmployee();
@@ -141,7 +174,7 @@ public class Control implements ActionListener {
             }
         }
         
-        else if (ae.getSource() == searchEmployee.Search) {
+        else if (ae.getSource() == searchEmployee.Search) { //search a employe from the DB
 
             searchEmployee.errorDisplay.setVisible(false);
             ArrayList<Employee> employeeList = null;
@@ -180,6 +213,62 @@ public class Control implements ActionListener {
         } else if (ae.getSource() == firstFrame.searchEmployee) {
             searchEmployee.setVisible(true);
 
+        } else if (ae.getSource() == firstFrame.addCustomers) {//addCustomer Button
+            addCustomer.setVisible(true);
+        } else if(ae.getSource() == addCustomer.save){ // insert a new customer to the DB
+            Customer cust = new Customer();
+
+            cust.setNan(addCustomer.nanTextField.getText());
+            cust.setName(addCustomer.nameTextField.getText());
+            cust.setSurname1(addCustomer.surname1TextField.getText());
+            cust.setSurname2(addCustomer.surname2TextField.getText());
+            cust.setPhone(Integer.parseInt(addCustomer.phoneTextField.getText()));
+            cust.setEmail(addCustomer.emailTextField.getText());
+            if (addCustomer.male.isSelected()) {
+                cust.setGender("Male");
+            } else {
+                cust.setGender("Female");
+            }
+            if (addCustomer.paypal.isSelected()) {
+                cust.setPayingMethod("PayPal");
+            } else if (addCustomer.creditCard.isSelected()) {
+                cust.setPayingMethod("Credit card");
+            } 
+            WorkCustomer.writeCustomer(cust);
+            JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
+            addCustomer.nanTextField.setText("");
+            addCustomer.nameTextField.setText("");
+            addCustomer.surname1TextField.setText("");
+            addCustomer.surname2TextField.setText("");
+            addCustomer.phoneTextField.setText("");
+            addCustomer.emailTextField.setText("");
+            addCustomer.male.setSelected(true);
+            addCustomer.paypal.setSelected(true);
+        }else if(ae.getSource()==firstFrame.showCustomer){
+            showCustomer.setVisible(true);
+            ArrayList<Customer> custList = null;
+            custList = WorkCustomer.showCustomer();
+
+            Customer cust;
+            DefaultTableModel modeloa = (DefaultTableModel) showCustomer.CustomerTable.getModel();
+            modeloa.setRowCount(0);
+            int rows = 0;
+            for (int i = 0; i < custList.size(); i++) {
+
+                //ARRAY LISTETIK IKASLEAK HARTU
+                cust = (Customer) custList.get(i);
+                //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
+                modeloa.addRow(new Object[rows]);
+                //ZUTABEAK GEHITZEKO
+                modeloa.setValueAt(cust.getNan(), i, 0);
+                modeloa.setValueAt(cust.getName(), i, 1);
+                modeloa.setValueAt(cust.getSurname1(), i, 2);
+                modeloa.setValueAt(cust.getSurname2(), i, 3);
+                modeloa.setValueAt(cust.getPhone(), i, 4);
+                modeloa.setValueAt(cust.getEmail(), i, 5);
+                modeloa.setValueAt(cust.getGender(), i, 6);
+                modeloa.setValueAt(cust.getPayingMethod(), i, 7);
+            }
         }
     }
 

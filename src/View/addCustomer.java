@@ -37,8 +37,8 @@ public class addCustomer extends javax.swing.JFrame {
         emailTextField = new javax.swing.JTextField();
         male = new javax.swing.JRadioButton();
         female = new javax.swing.JRadioButton();
-        director = new javax.swing.JRadioButton();
-        recepcionist = new javax.swing.JRadioButton();
+        paypal = new javax.swing.JRadioButton();
+        creditCard = new javax.swing.JRadioButton();
         save = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -81,12 +81,12 @@ public class addCustomer extends javax.swing.JFrame {
         Gender.add(female);
         female.setText("Female");
 
-        JobType.add(director);
-        director.setSelected(true);
-        director.setText("Paypal");
+        JobType.add(paypal);
+        paypal.setSelected(true);
+        paypal.setText("Paypal");
 
-        JobType.add(recepcionist);
-        recepcionist.setText("Credit Card");
+        JobType.add(creditCard);
+        creditCard.setText("Credit Card");
 
         save.setText("Save");
         save.setEnabled(false);
@@ -95,7 +95,7 @@ public class addCustomer extends javax.swing.JFrame {
 
         jLabel2.setText("Name");
 
-        jLabel3.setText("Name");
+        jLabel3.setText("NAN");
 
         jLabel4.setText("Second Surname");
 
@@ -117,12 +117,12 @@ public class addCustomer extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(emailTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
@@ -134,12 +134,12 @@ public class addCustomer extends javax.swing.JFrame {
                     .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(director)
+                            .addComponent(paypal)
                             .addComponent(male))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(female)
-                            .addComponent(recepcionist))))
+                            .addComponent(creditCard))))
                 .addContainerGap(242, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -155,8 +155,8 @@ public class addCustomer extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(director)
-                            .addComponent(recepcionist)
+                            .addComponent(paypal)
+                            .addComponent(creditCard)
                             .addComponent(jLabel8)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,6 +190,8 @@ public class addCustomer extends javax.swing.JFrame {
 
         nanTextField.getAccessibleContext().setAccessibleName("");
         nanTextField.getAccessibleContext().setAccessibleDescription("");
+
+        getAccessibleContext().setAccessibleName("Add a new Customer");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -252,7 +254,7 @@ public class addCustomer extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Gender;
     private javax.swing.ButtonGroup JobType;
-    public javax.swing.JRadioButton director;
+    public javax.swing.JRadioButton creditCard;
     public javax.swing.JTextField emailTextField;
     public javax.swing.JRadioButton female;
     private javax.swing.JLabel jLabel1;
@@ -266,8 +268,8 @@ public class addCustomer extends javax.swing.JFrame {
     public javax.swing.JRadioButton male;
     public javax.swing.JTextField nameTextField;
     public javax.swing.JTextField nanTextField;
+    public javax.swing.JRadioButton paypal;
     public javax.swing.JTextField phoneTextField;
-    public javax.swing.JRadioButton recepcionist;
     public javax.swing.JButton save;
     public javax.swing.JTextField surname1TextField;
     public javax.swing.JTextField surname2TextField;

@@ -5,12 +5,23 @@
  */
 package View;
 
+import java.awt.Event;
+
 /**
  *
  * @author Gorka
  */
 public class FirstFrame extends javax.swing.JFrame {
 
+    @Override
+    public boolean action(Event event, Object o) {
+        return super.action(event, o); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
     /**
      * Creates new form Main
      */
