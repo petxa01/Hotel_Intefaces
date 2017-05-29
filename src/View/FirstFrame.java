@@ -44,22 +44,18 @@ public class FirstFrame extends javax.swing.JFrame {
         addEmployee = new javax.swing.JMenuItem();
         showEmployee = new javax.swing.JMenuItem();
         searchEmployee = new javax.swing.JMenuItem();
-        removeEmployee = new javax.swing.JMenuItem();
         customersMenu = new javax.swing.JMenu();
         addCustomers = new javax.swing.JMenuItem();
         showCustomer = new javax.swing.JMenuItem();
         searchCustomer = new javax.swing.JMenuItem();
-        removeCustomer = new javax.swing.JMenuItem();
         roomsMenu = new javax.swing.JMenu();
         addRoom = new javax.swing.JMenuItem();
         showRoom = new javax.swing.JMenuItem();
         searchRoom = new javax.swing.JMenuItem();
-        removeRoom = new javax.swing.JMenuItem();
         reservationsMenu = new javax.swing.JMenu();
         addReservation = new javax.swing.JMenuItem();
         showReservation = new javax.swing.JMenuItem();
         searchReservation = new javax.swing.JMenuItem();
-        removeReservation = new javax.swing.JMenuItem();
 
         jMenuItem3.setText("jMenuItem3");
 
@@ -86,9 +82,6 @@ public class FirstFrame extends javax.swing.JFrame {
         });
         employeesMenu.add(searchEmployee);
 
-        removeEmployee.setText("Remove an employee");
-        employeesMenu.add(removeEmployee);
-
         jMenuBar1.add(employeesMenu);
 
         customersMenu.setText("Customers");
@@ -106,9 +99,6 @@ public class FirstFrame extends javax.swing.JFrame {
 
         searchCustomer.setText("Search customers");
         customersMenu.add(searchCustomer);
-
-        removeCustomer.setText("Remove customers");
-        customersMenu.add(removeCustomer);
 
         jMenuBar1.add(customersMenu);
 
@@ -128,9 +118,6 @@ public class FirstFrame extends javax.swing.JFrame {
         searchRoom.setText("Search a room");
         roomsMenu.add(searchRoom);
 
-        removeRoom.setText("Remove a room");
-        roomsMenu.add(removeRoom);
-
         jMenuBar1.add(roomsMenu);
 
         reservationsMenu.setText("Reservations");
@@ -144,14 +131,6 @@ public class FirstFrame extends javax.swing.JFrame {
         searchReservation.setText("Search reservations");
         reservationsMenu.add(searchReservation);
 
-        removeReservation.setText("Remove reservation");
-        removeReservation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeReservationActionPerformed(evt);
-            }
-        });
-        reservationsMenu.add(removeReservation);
-
         jMenuBar1.add(reservationsMenu);
 
         setJMenuBar(jMenuBar1);
@@ -160,11 +139,11 @@ public class FirstFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 1026, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 427, Short.MAX_VALUE)
         );
 
         pack();
@@ -186,10 +165,6 @@ public class FirstFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_showRoomActionPerformed
 
-    private void removeReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeReservationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_removeReservationActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -204,10 +179,6 @@ public class FirstFrame extends javax.swing.JFrame {
     public javax.swing.JMenu employeesMenu;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
-    public javax.swing.JMenuItem removeCustomer;
-    public javax.swing.JMenuItem removeEmployee;
-    public javax.swing.JMenuItem removeReservation;
-    public javax.swing.JMenuItem removeRoom;
     public javax.swing.JMenu reservationsMenu;
     public javax.swing.JMenu roomsMenu;
     public javax.swing.JMenuItem searchCustomer;

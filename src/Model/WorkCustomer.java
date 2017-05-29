@@ -88,35 +88,38 @@ public class WorkCustomer {
         
         
     }
-    public static ArrayList <Employee> searchEmployee(String nan){
-        ArrayList<Employee> employeeList = new ArrayList();
+    public static ArrayList <Customer> searchCustomer(String nan){
+        ArrayList<Customer> customerList = new ArrayList();
         Conne connex = new Conne();
-        Employee emp=new Employee();
+        Customer cust=new Customer();
         boolean exist =false;
         try{
            String trim = nan.trim();
-           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM employee WHERE Nan = ? ");
+           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM customer WHERE Nan = ? ");
            kontsulta.setString(1, trim);
            ResultSet res = kontsulta.executeQuery();
            while (res.next()){
                exist=true;
                
-               emp.setNan(res.getString(1));
-               emp.setName(res.getString(2));
-               emp.setSurname1(res.getString(3));
-               emp.setSurname2(res.getString(4));
-               emp.setPhone(res.getInt(5));
-               emp.setEmail(res.getString(6));
-               emp.setGender(res.getString(7));
-               emp.setJobType(res.getString(8));
-               employeeList.add(emp);
+               cust.setNan(res.getString(1));
+               cust.setName(res.getString(2));
+               cust.setName(res.getString(2));
+               cust.setName(res.getString(2));
+               cust.setName(res.getString(2));
+               cust.setSurname1(res.getString(3));
+               cust.setSurname2(res.getString(4));
+               cust.setPhone(res.getInt(5));
+               cust.setEmail(res.getString(6));
+               cust.setGender(res.getString(7));
+               cust.setPayingMethod(res.getString(8));
+               customerList.add(cust);
            }
            res.close();
         } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION");
         }
         if(exist){
-            return employeeList;
+            return customerList;
         }else{
             return null;
         }
@@ -124,10 +127,10 @@ public class WorkCustomer {
         
     }
     
-    public static ResultSet removeEmployee(String nan) throws SQLException {
+    public static ResultSet removeCustomer(String nan) throws SQLException {
         Conne conex = new Conne();
         try {
-            PreparedStatement kontsulta = conex.getConnection().prepareStatement("DELETE FROM hotel.employee WHERE nan=?");
+            PreparedStatement kontsulta = conex.getConnection().prepareStatement("DELETE FROM hotel.customer WHERE nan=?");
             kontsulta.setString(1, nan);
             kontsulta.execute();
             conex.desconectar();

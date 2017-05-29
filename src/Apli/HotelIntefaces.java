@@ -22,6 +22,7 @@ public class HotelIntefaces {
     SearchEmployee searchEmp;
     addCustomer addCustomer;
     ShowCustomers showCust;
+    SearchCustomer searchCust;
     /**
      * @param args the command line arguments
      */
@@ -40,7 +41,8 @@ public class HotelIntefaces {
         searchEmp=new SearchEmployee();
         addCustomer = new addCustomer();
         showCust=new ShowCustomers();
-        control=new Control(start_window, addEmployee, work, showEmp, searchEmp, addCustomer, showCust);
+        searchCust=new SearchCustomer();
+        control=new Control(start_window, addEmployee, work, showEmp, searchEmp, addCustomer, showCust,searchCust);
         start_window.setVisible(true);
         
         

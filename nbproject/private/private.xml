@@ -4,7 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Petxa/Documents/NetBeansProjects/Hotel_Interfaces/src/Model/WorkCustomer.java</file>
+            <file>file:/C:/Users/Petxa/Documents/NetBeansProjects/Hotel_Interfaces/src/Model/WorkEmployees.java</file>
+            <file>file:/C:/Users/Petxa/Documents/NetBeansProjects/Hotel_Interfaces/src/View/FirstFrame.java</file>
+            <file>file:/C:/Users/Petxa/Documents/NetBeansProjects/Hotel_Interfaces/src/Apli/HotelIntefaces.java</file>
             <file>file:/C:/Users/Petxa/Documents/NetBeansProjects/Hotel_Interfaces/src/Controller/Control.java</file>
+            <file>file:/C:/Users/Petxa/Documents/NetBeansProjects/Hotel_Interfaces/src/View/addCustomer.java</file>
+            <file>file:/C:/Users/Petxa/Documents/NetBeansProjects/Hotel_Interfaces/src/View/ShowCustomers.java</file>
         </group>
     </open-files>
 </project-private>

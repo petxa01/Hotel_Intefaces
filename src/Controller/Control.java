@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,8 +39,9 @@ public class Control implements ActionListener {
     private SearchEmployee searchEmployee; //ventana searchemp
     private addCustomer addCustomer; //ventana addCustomer
     private ShowCustomers showCustomer; // ventana showCustomer
+    private SearchCustomer searchCustomer; //ventana search cust
 
-    public Control(FirstFrame frame1, addEmployee addemp, WorkEmployees workemp, ShowEmployees showEmp, SearchEmployee searchEmp , addCustomer addCust, ShowCustomers showCust) {
+    public Control(FirstFrame frame1, addEmployee addemp, WorkEmployees workemp, ShowEmployees showEmp, SearchEmployee searchEmp, addCustomer addCust, ShowCustomers showCust, SearchCustomer searchCust) {
         addEmployee = addemp;
         firstFrame = frame1;
         emp = workemp;
@@ -47,6 +49,7 @@ public class Control implements ActionListener {
         searchEmployee = searchEmp;
         addCustomer = addCust;
         showCustomer = showCust;
+        searchCustomer = searchCust;
         //Activating listeners
         firstFrame.addEmployee.addActionListener(this);
         firstFrame.showEmployee.addActionListener(this);
@@ -58,8 +61,12 @@ public class Control implements ActionListener {
         firstFrame.addCustomers.addActionListener(this);
         addCustomer.save.addActionListener(this);
         firstFrame.showCustomer.addActionListener(this);
+        showCustomer.refreshCustomers.addActionListener(this);
+        showCustomer.removeCustomer.addActionListener(this);
+        firstFrame.searchCustomer.addActionListener(this);
+        searchCustomer.Search.addActionListener(this);
         
-        
+
     }
 //    public void showAddEmployees(){
 //        addEmployee.setVisible(true);
@@ -70,12 +77,25 @@ public class Control implements ActionListener {
             addEmployee.setVisible(true);
         } else if (ae.getSource() == addEmployee.save) {//Save a new employee button
             Employee emplo = new Employee();
-            boolean valid;
+            boolean valid = false;
+            boolean error = false;
             emplo.setNan(addEmployee.nanTextField.getText());
             emplo.setName(addEmployee.nameTextField.getText());
             emplo.setSurname1(addEmployee.surname1TextField.getText());
             emplo.setSurname2(addEmployee.surname2TextField.getText());
-            emplo.setPhone(Integer.parseInt(addEmployee.phoneTextField.getText()));
+            if (!addEmployee.phoneTextField.getText().isEmpty()) {
+                int phone = 0;
+                try {
+                    phone = Integer.parseInt(addEmployee.phoneTextField.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null,
+                            "Phone must be a number",
+                            "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                    error = true;
+                }
+                emplo.setPhone(phone);
+            }
             emplo.setEmail(addEmployee.emailTextField.getText());
             if (addEmployee.male.isSelected()) {
                 emplo.setGender("Male");
@@ -91,18 +111,29 @@ public class Control implements ActionListener {
             } else {
                 emplo.setJobType("Chef");
             }
-            valid=WorkEmployees.writeEmployee(emplo);
-            if(valid){
-            JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
+            if (!error) {
+                if (emplo.getNan() == null || emplo.getName() == null || emplo.getSurname1() == null || emplo.getSurname2() == null || emplo.getPhone() == 0 || emplo.getGender() == null || emplo.getJobType() == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "All the fields must be filled",
+                            "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    valid = WorkEmployees.writeEmployee(emplo);
+
+                }
             }
-            addEmployee.nanTextField.setText("");
-            addEmployee.nameTextField.setText("");
-            addEmployee.surname1TextField.setText("");
-            addEmployee.surname2TextField.setText("");
-            addEmployee.phoneTextField.setText("");
-            addEmployee.emailTextField.setText("");
-            addEmployee.male.setSelected(true);
-            addEmployee.director.setSelected(true);
+            if (valid) {
+                JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
+                addEmployee.nanTextField.setText("");
+                addEmployee.nameTextField.setText("");
+                addEmployee.surname1TextField.setText("");
+                addEmployee.surname2TextField.setText("");
+                addEmployee.phoneTextField.setText("");
+                addEmployee.emailTextField.setText("");
+                addEmployee.male.setSelected(true);
+                addEmployee.director.setSelected(true);
+            }
+            
         } else if (ae.getSource() == firstFrame.showEmployee) {//boton showEmployee
             showEmployee.setVisible(true);
             ArrayList<Employee> employeeList = null;
@@ -153,28 +184,26 @@ public class Control implements ActionListener {
                 modeloa.setValueAt(emplo.getJobType(), i, 7);
 
             }
-        } else if(ae.getSource() == showEmployee.removeEmployee){
-            if(showEmployee.employeeTable.getSelectionModel().isSelectionEmpty()){
+        } else if (ae.getSource() == showEmployee.removeEmployee) {
+            if (showEmployee.employeeTable.getSelectionModel().isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null,
                         "You must select one row",
                         "Warning",
                         JOptionPane.WARNING_MESSAGE);
-            } else{
+            } else {
                 int i = showEmployee.employeeTable.getSelectedRow();
                 String nan = (String) showEmployee.employeeTable.getValueAt(i, 0);
                 try {
                     WorkEmployees.removeEmployee(nan);
                 } catch (SQLException ex) {
-                    
+
                 }
                 int selectedRow = showEmployee.employeeTable.getSelectedRow();
                 DefaultTableModel modeloa = (DefaultTableModel) showEmployee.employeeTable.getModel();
                 modeloa.removeRow(selectedRow);
                 showEmployee.employeeTable.setModel(modeloa);
             }
-        }
-        
-        else if (ae.getSource() == searchEmployee.Search) { //search a employe from the DB
+        } else if (ae.getSource() == searchEmployee.Search) { //search a employe from the DB
 
             searchEmployee.errorDisplay.setVisible(false);
             ArrayList<Employee> employeeList = null;
@@ -192,7 +221,6 @@ public class Control implements ActionListener {
                     modeloa.addRow(new Object[rows]);
                     emplo = employeeList.get(i);
                     //ZUTABEAK GEHITZEKO
-                    System.out.println("");
                     modeloa.setValueAt(emplo.getNan(), i, 0);
                     modeloa.setValueAt(emplo.getName(), i, 1);
                     modeloa.setValueAt(emplo.getSurname1(), i, 2);
@@ -215,14 +243,26 @@ public class Control implements ActionListener {
 
         } else if (ae.getSource() == firstFrame.addCustomers) {//addCustomer Button
             addCustomer.setVisible(true);
-        } else if(ae.getSource() == addCustomer.save){ // insert a new customer to the DB
+        } else if (ae.getSource() == addCustomer.save) { // insert a new customer to the DB
             Customer cust = new Customer();
-
+            boolean error = false;
             cust.setNan(addCustomer.nanTextField.getText());
             cust.setName(addCustomer.nameTextField.getText());
             cust.setSurname1(addCustomer.surname1TextField.getText());
             cust.setSurname2(addCustomer.surname2TextField.getText());
-            cust.setPhone(Integer.parseInt(addCustomer.phoneTextField.getText()));
+            if (!addCustomer.phoneTextField.getText().isEmpty()) {
+                int phone = 0;
+                try {
+                    phone = Integer.parseInt(addCustomer.phoneTextField.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null,
+                            "Phone must be a number",
+                            "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                    error = true;
+                }
+                cust.setPhone(phone);
+            }
             cust.setEmail(addCustomer.emailTextField.getText());
             if (addCustomer.male.isSelected()) {
                 cust.setGender("Male");
@@ -233,18 +273,28 @@ public class Control implements ActionListener {
                 cust.setPayingMethod("PayPal");
             } else if (addCustomer.creditCard.isSelected()) {
                 cust.setPayingMethod("Credit card");
-            } 
-            WorkCustomer.writeCustomer(cust);
-            JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
-            addCustomer.nanTextField.setText("");
-            addCustomer.nameTextField.setText("");
-            addCustomer.surname1TextField.setText("");
-            addCustomer.surname2TextField.setText("");
-            addCustomer.phoneTextField.setText("");
-            addCustomer.emailTextField.setText("");
-            addCustomer.male.setSelected(true);
-            addCustomer.paypal.setSelected(true);
-        }else if(ae.getSource()==firstFrame.showCustomer){
+            }
+            if (!error) {
+                if (cust.getNan() == null || cust.getName() == null || cust.getSurname1() == null || cust.getSurname2() == null || cust.getPhone() == 0 || cust.getGender() == null || cust.getPayingMethod() == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "All the fields must be filled",
+                            "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    WorkCustomer.writeCustomer(cust);
+                    JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
+                    addCustomer.nanTextField.setText("");
+                    addCustomer.nameTextField.setText("");
+                    addCustomer.surname1TextField.setText("");
+                    addCustomer.surname2TextField.setText("");
+                    addCustomer.phoneTextField.setText("");
+                    addCustomer.emailTextField.setText("");
+                    addCustomer.male.setSelected(true);
+                    addCustomer.paypal.setSelected(true);
+                }
+            }
+
+        } else if (ae.getSource() == firstFrame.showCustomer) {
             showCustomer.setVisible(true);
             ArrayList<Customer> custList = null;
             custList = WorkCustomer.showCustomer();
@@ -269,7 +319,87 @@ public class Control implements ActionListener {
                 modeloa.setValueAt(cust.getGender(), i, 6);
                 modeloa.setValueAt(cust.getPayingMethod(), i, 7);
             }
+        } else if (ae.getSource() == showCustomer.removeCustomer) {
+            if (showCustomer.CustomerTable.getSelectionModel().isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "You must select one row",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                int i = showCustomer.CustomerTable.getSelectedRow();
+                String nan = (String) showCustomer.CustomerTable.getValueAt(i, 0);
+                try {
+                    WorkCustomer.removeCustomer(nan);
+                } catch (SQLException ex) {
+
+                }
+                int selectedRow = showCustomer.CustomerTable.getSelectedRow();
+                DefaultTableModel modeloa = (DefaultTableModel) showCustomer.CustomerTable.getModel();
+                modeloa.removeRow(selectedRow);
+                showCustomer.CustomerTable.setModel(modeloa);
+            }
+
+        } else if (ae.getSource() == showCustomer.refreshCustomers) {//boton Resfresh en ShowEmployee
+            ArrayList<Customer> custList = null;
+            custList = WorkCustomer.showCustomer();
+
+            Customer cust;
+            DefaultTableModel modeloa = (DefaultTableModel) showCustomer.CustomerTable.getModel();
+            modeloa.setRowCount(0);
+            int rows = 0;
+            for (int i = 0; i < custList.size(); i++) {
+
+                //ARRAY LISTETIK IKASLEAK HARTU
+                cust = (Customer) custList.get(i);
+                //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
+                modeloa.addRow(new Object[rows]);
+                //ZUTABEAK GEHITZEKO
+                modeloa.setValueAt(cust.getNan(), i, 0);
+                modeloa.setValueAt(cust.getName(), i, 1);
+                modeloa.setValueAt(cust.getSurname1(), i, 2);
+                modeloa.setValueAt(cust.getSurname2(), i, 3);
+                modeloa.setValueAt(cust.getPhone(), i, 4);
+                modeloa.setValueAt(cust.getEmail(), i, 5);
+                modeloa.setValueAt(cust.getGender(), i, 6);
+                modeloa.setValueAt(cust.getPayingMethod(), i, 7);
+
+            }
+        }else if(ae.getSource()==firstFrame.searchCustomer){
+            searchCustomer.setVisible(true);
+        }else if(ae.getSource()==searchCustomer.Search){
+            searchCustomer.errorDisplay.setVisible(false);
+            ArrayList<Customer> custList = null;
+            Customer cust;
+            DefaultTableModel modeloa = (DefaultTableModel) searchCustomer.CustomerTable.getModel();
+            modeloa.setRowCount(0);
+            int rows = 0;
+
+            //ARRAY LISTETIK IKASLEAK HARTU
+            custList = WorkCustomer.searchCustomer(searchCustomer.SearchTextField.getText());
+            //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
+            if (custList != null) {
+                for (int i = 0; i < custList.size(); i++) {
+                    //System.out.println(emplo.getNan());
+                    modeloa.addRow(new Object[rows]);
+                    cust = custList.get(i);
+                    //ZUTABEAK GEHITZEKO
+                    modeloa.setValueAt(cust.getNan(), i, 0);
+                    modeloa.setValueAt(cust.getName(), i, 1);
+                    modeloa.setValueAt(cust.getSurname1(), i, 2);
+                    modeloa.setValueAt(cust.getSurname2(), i, 3);
+                    modeloa.setValueAt(cust.getPhone(), i, 4);
+                    modeloa.setValueAt(cust.getEmail(), i, 5);
+                    modeloa.setValueAt(cust.getGender(), i, 6);
+                    modeloa.setValueAt(cust.getPayingMethod(), i, 7);
+                    searchCustomer.errorDisplay.setVisible(false);
+                    searchCustomer.SearchTextField.setText("");
+                }
+            } else {
+                searchCustomer.errorDisplay.setText("No Customer with that NAN");
+                searchCustomer.errorDisplay.setVisible(true);
+                searchCustomer.SearchTextField.setText("");
+
+            }
         }
     }
-
 }
