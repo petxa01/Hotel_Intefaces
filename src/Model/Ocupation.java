@@ -24,24 +24,23 @@ import java.util.Locale;
  * @encoding UTF-8
  * 
  **/
-public class Reservation {
-    private int res_cod;
+public class Ocupation {
+    private int ocu_Cod;
     private String customerNan;
     private int roomNumber;
-    private LocalDate enterDate;
-    private LocalDate leaveDate;
+    
     
     
     //constructor
-    public Reservation(){
+    public Ocupation(){
         
     }
     
     
     
     //getters
-    public int getRes_cod(){
-        return res_cod;
+    public int getOcu_Cod(){
+        return ocu_Cod;
     }
     public String getCustomerNan(){
         return customerNan;
@@ -49,14 +48,7 @@ public class Reservation {
     public int getRoomNumber(){
         return roomNumber;
     }
-    public LocalDate getEnterDate()
-    {
-        return enterDate;
-    }
-    public LocalDate getLeaveDate()
-    {
-        return leaveDate;
-    }
+    
     
     //setters
     
@@ -70,13 +62,6 @@ public class Reservation {
         roomNumber = newRoomNumber;
     }
     
-    public void setEnterDate(LocalDate newEnterDate){
-        enterDate = newEnterDate;
-    }
-   
-    public void setLeaveDate(LocalDate newLeaveDate){
-        enterDate = newLeaveDate;
-    }
     
 
 }

@@ -16,13 +16,16 @@ import Controller.*;
 public class HotelIntefaces {
     WorkEmployees work;
     FirstFrame start_window;
-    addEmployee addEmployee;
+    AddEmployee addEmployee;
     Control control;
     ShowEmployees showEmp;
     SearchEmployee searchEmp;
-    addCustomer addCustomer;
+    AddCustomer addCustomer;
     ShowCustomers showCust;
     SearchCustomer searchCust;
+    ShowRooms showRoom;
+    AddRooms addRoom;
+    SearchRoom searchRoom;
     /**
      * @param args the command line arguments
      */
@@ -37,12 +40,15 @@ public class HotelIntefaces {
         showEmp=new ShowEmployees();
         work=new WorkEmployees();
         start_window=new FirstFrame();
-        addEmployee=new addEmployee();
+        addEmployee=new AddEmployee();
         searchEmp=new SearchEmployee();
-        addCustomer = new addCustomer();
+        addCustomer = new AddCustomer();
         showCust=new ShowCustomers();
         searchCust=new SearchCustomer();
-        control=new Control(start_window, addEmployee, work, showEmp, searchEmp, addCustomer, showCust,searchCust);
+        showRoom = new ShowRooms();
+        addRoom = new AddRooms();
+        searchRoom = new SearchRoom();
+        control=new Control(start_window, addEmployee, work, showEmp, searchEmp, addCustomer, showCust,searchCust,showRoom, addRoom,searchRoom);
         start_window.setVisible(true);
         
         

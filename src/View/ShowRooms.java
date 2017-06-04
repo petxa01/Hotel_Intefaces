@@ -28,25 +28,24 @@ public class ShowRooms extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        CustomerTable = new javax.swing.JTable();
-        refreshCustomers = new javax.swing.JButton();
-        removeCustomer = new javax.swing.JButton();
+        RoomTable = new javax.swing.JTable();
+        removeRooms = new javax.swing.JButton();
 
         setTitle("Employees");
 
-        CustomerTable.setModel(new javax.swing.table.DefaultTableModel(
+        RoomTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null}
+                {null, null, null}
             },
             new String [] {
-                "Nan", "Name", "First surname", "Second surname", "Phone", "Email", "Gender", "Payment Method"
+                "Room Number", "Room Type", "Room Floor"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, true, true, true
+                true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -57,45 +56,32 @@ public class ShowRooms extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(CustomerTable);
-        if (CustomerTable.getColumnModel().getColumnCount() > 0) {
-            CustomerTable.getColumnModel().getColumn(0).setResizable(false);
-            CustomerTable.getColumnModel().getColumn(1).setResizable(false);
-            CustomerTable.getColumnModel().getColumn(2).setResizable(false);
-            CustomerTable.getColumnModel().getColumn(3).setResizable(false);
-            CustomerTable.getColumnModel().getColumn(4).setResizable(false);
-            CustomerTable.getColumnModel().getColumn(5).setResizable(false);
-            CustomerTable.getColumnModel().getColumn(6).setResizable(false);
-            CustomerTable.getColumnModel().getColumn(7).setResizable(false);
+        jScrollPane1.setViewportView(RoomTable);
+        if (RoomTable.getColumnModel().getColumnCount() > 0) {
+            RoomTable.getColumnModel().getColumn(0).setResizable(false);
+            RoomTable.getColumnModel().getColumn(1).setResizable(false);
+            RoomTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        refreshCustomers.setText("Refresh");
-
-        removeCustomer.setText("Remove");
+        removeRooms.setText("Remove");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(removeCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(306, 306, 306)
-                .addComponent(refreshCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(removeRooms, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                .addGap(35, 35, 35)
-                .addComponent(refreshCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(removeCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(85, 85, 85)
+                .addComponent(removeRooms, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -106,9 +92,8 @@ public class ShowRooms extends javax.swing.JFrame {
      */
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTable CustomerTable;
+    public javax.swing.JTable RoomTable;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JButton refreshCustomers;
-    public javax.swing.JButton removeCustomer;
+    public javax.swing.JButton removeRooms;
     // End of variables declaration//GEN-END:variables
 }

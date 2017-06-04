@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//*
+// * To change this license header, choose License Headers in Project Properties.
+// * To change this template file, choose Tools | Templates
+// * and open the template in the editor.
+// */
 package Model;
 
 import java.io.FileInputStream;
@@ -33,20 +33,16 @@ import javax.swing.JOptionPane;
  * in Templates/Classes/Class.java.
  *
  */
-public class WorkCustomer {
+public class WorkRoom {
 
-    public static boolean writeCustomer(Customer cust) {
+    public static boolean writeRoom(Room room) {
        Conne conex = new Conne(); //Konexioa burutu       
         try {
-            PreparedStatement kontsulta = conex.getConnection().prepareStatement("INSERT INTO hotel.customer VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            kontsulta.setString(1, cust.getNan());
-            kontsulta.setString(2, cust.getName());
-            kontsulta.setString(3, cust.getSurname1());
-            kontsulta.setString(4, cust.getSurname2());
-            kontsulta.setInt(5, cust.getPhone());
-            kontsulta.setString(6, cust.getEmail());
-            kontsulta.setString(7, cust.getGender());
-            kontsulta.setString(8, cust.getPayingMethod());
+            PreparedStatement kontsulta = conex.getConnection().prepareStatement("INSERT INTO hotel.room VALUES (?, ?, ?)");
+            kontsulta.setInt(1, room.getNumber());
+            kontsulta.setString(2, room.getTypeOfRoom());
+            kontsulta.setInt(3, room.getFloor());
+            
 
             kontsulta.execute();//Kontsulta exekutatu eta emaitza res-ri pasatu
 
@@ -54,7 +50,7 @@ public class WorkCustomer {
             conex.desconectar();
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(null,
-                        "That customer already exists",
+                        "That room already exists",
                         "Warning",
                         JOptionPane.WARNING_MESSAGE);
             return false;
@@ -64,26 +60,24 @@ public class WorkCustomer {
         return true;
 
     }
-    public static ArrayList <Customer> showCustomer() {
-        ArrayList<Customer> custList = new ArrayList();
+    public static ArrayList <Room> showRoom() {
+        ArrayList<Room> roomList = new ArrayList();
         Conne connex = new Conne();
         
         boolean exist =false;
         try{
-           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM hotel.customer");
+           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM room");
            ResultSet res = kontsulta.executeQuery();
+            
            while (res.next()){
+               
                exist=true;
-               Customer cust=new Customer();
-               cust.setNan(res.getString(1));
-               cust.setName(res.getString(2));
-               cust.setSurname1(res.getString(3));
-               cust.setSurname2(res.getString(4));
-               cust.setPhone(res.getInt(5));
-               cust.setEmail(res.getString(6));
-               cust.setGender(res.getString(7));
-               cust.setPayingMethod(res.getString(8));
-               custList.add(cust);
+               Room room=new Room();
+               room.setNumber(res.getInt(1));
+               room.setTypeOfRoom(res.getString(2));
+               room.setFloor(res.getInt(3));
+               System.out.println(room.getFloor());
+               roomList.add(room);
                
            }
            res.close();
@@ -91,45 +85,37 @@ public class WorkCustomer {
             System.out.println("SQL EXCEPTION");
         }
         if(exist){
-            return custList;
+            return roomList;
         }else{
             return null;
         }
         
         
     }
-    public static ArrayList <Customer> searchCustomer(String nan){
-        ArrayList<Customer> customerList = new ArrayList();
+    public static ArrayList <Room> searchRoom(int roomNumber){
+        ArrayList<Room> roomList = new ArrayList();
         Conne connex = new Conne();
-        Customer cust=new Customer();
+        Room room=new Room();
         boolean exist =false;
         try{
-           String trim = nan.trim();
-           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM customer WHERE Nan = ? ");
-           kontsulta.setString(1, trim);
+          
+           PreparedStatement kontsulta = connex.getConnection().prepareStatement("SELECT * FROM room WHERE Number = ? ");
+           kontsulta.setInt(1, roomNumber);
            ResultSet res = kontsulta.executeQuery();
            while (res.next()){
                exist=true;
+               room.setNumber(res.getInt(1));
+               room.setTypeOfRoom(res.getString(2));
+               room.setFloor(res.getInt(3));
                
-               cust.setNan(res.getString(1));
-               cust.setName(res.getString(2));
-               cust.setName(res.getString(2));
-               cust.setName(res.getString(2));
-               cust.setName(res.getString(2));
-               cust.setSurname1(res.getString(3));
-               cust.setSurname2(res.getString(4));
-               cust.setPhone(res.getInt(5));
-               cust.setEmail(res.getString(6));
-               cust.setGender(res.getString(7));
-               cust.setPayingMethod(res.getString(8));
-               customerList.add(cust);
+               roomList.add(room);
            }
            res.close();
         } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION");
         }
         if(exist){
-            return customerList;
+            return roomList;
         }else{
             return null;
         }
@@ -137,11 +123,11 @@ public class WorkCustomer {
         
     }
     
-    public static ResultSet removeCustomer(String nan) throws SQLException {
+    public static ResultSet removeRoom(int room) throws SQLException {
         Conne conex = new Conne();
         try {
-            PreparedStatement kontsulta = conex.getConnection().prepareStatement("DELETE FROM hotel.customer WHERE nan=?");
-            kontsulta.setString(1, nan);
+            PreparedStatement kontsulta = conex.getConnection().prepareStatement("DELETE FROM hotel.room WHERE Number=?");
+            kontsulta.setInt(1, room);
             kontsulta.execute();
             conex.desconectar();
         } catch (SQLException e) {

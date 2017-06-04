@@ -32,16 +32,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Control implements ActionListener {
 
-    private addEmployee addEmployee; //ventana addEmployee
+    private AddEmployee addEmployee; //ventana AddEmployee
     private FirstFrame firstFrame;// ventana de inicio
     private WorkEmployees emp = new WorkEmployees();
     private ShowEmployees showEmployee; //ventana showEmployees
     private SearchEmployee searchEmployee; //ventana searchemp
-    private addCustomer addCustomer; //ventana addCustomer
+    private AddCustomer addCustomer; //ventana AddCustomer
     private ShowCustomers showCustomer; // ventana showCustomer
     private SearchCustomer searchCustomer; //ventana search cust
+    private ShowRooms showRooms;
+    private AddRooms addRooms;
+    private SearchRoom searchRooms;
 
-    public Control(FirstFrame frame1, addEmployee addemp, WorkEmployees workemp, ShowEmployees showEmp, SearchEmployee searchEmp, addCustomer addCust, ShowCustomers showCust, SearchCustomer searchCust) {
+    public Control(FirstFrame frame1, AddEmployee addemp, WorkEmployees workemp, ShowEmployees showEmp, SearchEmployee searchEmp, AddCustomer addCust, ShowCustomers showCust, SearchCustomer searchCust, ShowRooms showRoom, AddRooms addRoom, SearchRoom searchRoom) {
         addEmployee = addemp;
         firstFrame = frame1;
         emp = workemp;
@@ -50,6 +53,9 @@ public class Control implements ActionListener {
         addCustomer = addCust;
         showCustomer = showCust;
         searchCustomer = searchCust;
+        showRooms = showRoom;
+        addRooms = addRoom;
+        searchRooms = searchRoom;
         //Activating listeners
         firstFrame.addEmployee.addActionListener(this);
         firstFrame.showEmployee.addActionListener(this);
@@ -65,11 +71,16 @@ public class Control implements ActionListener {
         showCustomer.removeCustomer.addActionListener(this);
         firstFrame.searchCustomer.addActionListener(this);
         searchCustomer.Search.addActionListener(this);
-        
+        firstFrame.showRoom.addActionListener(this);
+        showRooms.removeRooms.addActionListener(this);
+        firstFrame.addRoom.addActionListener(this);
+        addRooms.saveRoom.addActionListener(this);
+        firstFrame.searchRoom.addActionListener(this);
+        searchRooms.Search.addActionListener(this);
 
     }
 //    public void showAddEmployees(){
-//        addEmployee.setVisible(true);
+//        AddEmployee.setVisible(true);
 //    }
 
     public void actionPerformed(ActionEvent ae) {
@@ -132,8 +143,10 @@ public class Control implements ActionListener {
                 addEmployee.emailTextField.setText("");
                 addEmployee.male.setSelected(true);
                 addEmployee.director.setSelected(true);
+            } else {
+                addEmployee.nanTextField.setText("");
             }
-            
+
         } else if (ae.getSource() == firstFrame.showEmployee) {//boton showEmployee
             showEmployee.setVisible(true);
             ArrayList<Employee> employeeList = null;
@@ -195,6 +208,7 @@ public class Control implements ActionListener {
                 String nan = (String) showEmployee.employeeTable.getValueAt(i, 0);
                 try {
                     WorkEmployees.removeEmployee(nan);
+                    JOptionPane.showMessageDialog(null, "Succesfully deleted", "Succesfully deleted", JOptionPane.INFORMATION_MESSAGE);
                 } catch (SQLException ex) {
 
                 }
@@ -281,16 +295,21 @@ public class Control implements ActionListener {
                             "Warning",
                             JOptionPane.WARNING_MESSAGE);
                 } else {
-                    WorkCustomer.writeCustomer(cust);
-                    JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
-                    addCustomer.nanTextField.setText("");
-                    addCustomer.nameTextField.setText("");
-                    addCustomer.surname1TextField.setText("");
-                    addCustomer.surname2TextField.setText("");
-                    addCustomer.phoneTextField.setText("");
-                    addCustomer.emailTextField.setText("");
-                    addCustomer.male.setSelected(true);
-                    addCustomer.paypal.setSelected(true);
+                    boolean valid = WorkCustomer.writeCustomer(cust);
+                    if (valid) {
+                        JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
+                        addCustomer.nanTextField.setText("");
+                        addCustomer.nameTextField.setText("");
+                        addCustomer.surname1TextField.setText("");
+                        addCustomer.surname2TextField.setText("");
+                        addCustomer.phoneTextField.setText("");
+                        addCustomer.emailTextField.setText("");
+                        addCustomer.male.setSelected(true);
+                        addCustomer.paypal.setSelected(true);
+                    } else {
+                        addCustomer.nanTextField.setText("");
+                    }
+
                 }
             }
 
@@ -330,6 +349,7 @@ public class Control implements ActionListener {
                 String nan = (String) showCustomer.CustomerTable.getValueAt(i, 0);
                 try {
                     WorkCustomer.removeCustomer(nan);
+                    JOptionPane.showMessageDialog(null, "Succesfully deleted", "Succesfully deleted", JOptionPane.INFORMATION_MESSAGE);
                 } catch (SQLException ex) {
 
                 }
@@ -364,9 +384,9 @@ public class Control implements ActionListener {
                 modeloa.setValueAt(cust.getPayingMethod(), i, 7);
 
             }
-        }else if(ae.getSource()==firstFrame.searchCustomer){
+        } else if (ae.getSource() == firstFrame.searchCustomer) {
             searchCustomer.setVisible(true);
-        }else if(ae.getSource()==searchCustomer.Search){
+        } else if (ae.getSource() == searchCustomer.Search) {
             searchCustomer.errorDisplay.setVisible(false);
             ArrayList<Customer> custList = null;
             Customer cust;
@@ -400,6 +420,139 @@ public class Control implements ActionListener {
                 searchCustomer.SearchTextField.setText("");
 
             }
+        } else if (ae.getSource() == firstFrame.showRoom) {
+            showRooms.setVisible(true);
+            ArrayList<Room> roomList = null;
+            roomList = WorkRoom.showRoom();
+
+            Room room;
+            DefaultTableModel modeloa = (DefaultTableModel) showRooms.RoomTable.getModel();
+            modeloa.setRowCount(0);
+            int rows = 0;
+            for (int i = 0; i < roomList.size(); i++) {
+
+                //ARRAY LISTETIK IKASLEAK HARTU
+                room = (Room) roomList.get(i);
+                //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
+                modeloa.addRow(new Object[rows]);
+                //ZUTABEAK GEHITZEKO
+                modeloa.setValueAt(room.getNumber(), i, 0);
+                modeloa.setValueAt(room.getTypeOfRoom(), i, 1);
+                modeloa.setValueAt(room.getFloor(), i, 2);
+
+            }
+        } else if (ae.getSource() == showRooms.removeRooms) {
+            if (showRooms.RoomTable.getSelectionModel().isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "You must select one row",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                int i = showRooms.RoomTable.getSelectedRow();
+                int Number = (int) showRooms.RoomTable.getValueAt(i, 0);
+                try {
+                    WorkRoom.removeRoom(Number);
+                    JOptionPane.showMessageDialog(null, "Succesfully deleted", "Succesfully deleted", JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+
+                }
+                int selectedRow = showRooms.RoomTable.getSelectedRow();
+                DefaultTableModel modeloa = (DefaultTableModel) showRooms.RoomTable.getModel();
+                modeloa.removeRow(selectedRow);
+                showRooms.RoomTable.setModel(modeloa);
+            }
+        } else if (ae.getSource() == firstFrame.addRoom) {
+            addRooms.setVisible(true);
+        } else if (ae.getSource() == addRooms.saveRoom) {
+            Room room = new Room();
+            boolean valid = false;
+            boolean error = false;
+            if (!addRooms.roomNumber.getText().isEmpty()) {
+                int number = 0;
+                try {
+                    number = Integer.parseInt(addRooms.roomNumber.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null,
+                            "Room number must be a number",
+                            "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                    error = true;
+                }
+                room.setNumber(number);
+            }
+            if (addRooms.Single.isSelected()) {
+                room.setTypeOfRoom("Single");
+            } else if (addRooms.Familiar.isSelected()) {
+                room.setTypeOfRoom("Familiar");
+            } else if (addRooms.Suit.isSelected()) {
+                room.setTypeOfRoom("Suit");
+            }
+            int floor = room.getNumber() / 100;
+            room.setFloor(floor);
+            if (!error) {
+                if (room.getNumber() == 0) {
+                    JOptionPane.showMessageDialog(null,
+                            "All the fields must be filled",
+                            "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    valid = WorkRoom.writeRoom(room);
+
+                }
+            }
+            if (valid) {
+                JOptionPane.showMessageDialog(null, "Succesfully added", "Succesfully added", JOptionPane.INFORMATION_MESSAGE);
+                addRooms.roomNumber.setText("");
+                addRooms.Single.setSelected(true);
+            } else {
+                addRooms.roomNumber.setText("");
+                addRooms.Single.setSelected(true);
+            }
+        } else if (ae.getSource() == firstFrame.searchRoom) {
+            searchRooms.setVisible(true);
+        } else if (ae.getSource() == searchRooms.Search) {
+            searchRooms.errorDisplay.setVisible(false);
+            ArrayList<Room> roomList = null;
+            Room room;
+            int roomNumber=0;
+            boolean error = false;
+            DefaultTableModel modeloa = (DefaultTableModel) searchRooms.RoomTable.getModel();
+            modeloa.setRowCount(0);
+            int rows = 0;
+
+            //ARRAY LISTETIK IKASLEAK HARTU
+            try {
+                roomNumber= Integer.parseInt(searchRooms.SearchTextField.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Room number must be a number",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+                error = true;
+            }
+            if (!error) {
+                roomList = WorkRoom.searchRoom(roomNumber);
+                //LORTU DUGUN OBJETU BAKOITZEKO FILA BAT GEHITZEN DIOGU TAULARI
+                if (roomList != null) {
+                    for (int i = 0; i < roomList.size(); i++) {
+                        //System.out.println(emplo.getNan());
+                        modeloa.addRow(new Object[rows]);
+                        room = roomList.get(i);
+                        //ZUTABEAK GEHITZEKO
+                        modeloa.setValueAt(room.getNumber(), i, 0);
+                        modeloa.setValueAt(room.getTypeOfRoom(), i, 1);
+                        modeloa.setValueAt(room.getFloor(), i, 2);
+                        searchRooms.errorDisplay.setVisible(false);
+                        searchRooms.SearchTextField.setText("");
+                    }
+                } else {
+                    searchRooms.errorDisplay.setText("No room with that number");
+                    searchRooms.errorDisplay.setVisible(true);
+                    searchRooms.SearchTextField.setText("");
+
+                }
+            }
+
         }
     }
 }
